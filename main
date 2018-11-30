@@ -17,8 +17,9 @@ if __name__ == '__main__':
     #filepath = 'H:/seleuim/jingdata_saas_py/report.html'
 
     #filepath = 'C:/Program Files (x86)/Jenkins/workspace/pytest002/report/1eport.html'
-    filepath = 'C:/Program Files (x86)/Jenkins/workspace/pytest002/report/1eport.html'
+    #filepath = 'C:/Program Files (x86)/Jenkins/workspace/pytest002/report/1eport.html'
     #filepath = 'H:/report.html'
+    filepath = './report.html'
     ftp = open(filepath, 'wb')
     runner = HTMLTestRunner.HTMLTestRunner(stream=ftp, title='鲸准接口平台')
     runner.run(allTest())
