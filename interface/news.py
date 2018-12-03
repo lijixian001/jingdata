@@ -49,28 +49,29 @@ class NewsTest(unittest.TestCase):
         newsletterurl = url + "/api/news-letter/list?pageSize=10&id="
         r = requests.get(newsletterurl,headers = headers)
         d = r.json()
-        print("7✖24H快讯数量：%s"%len(d['data']['list']))
+        print("7*24H快讯数量：%s"%len(d['data']['list']))
         self.assertEqual(len(d['data']['list']),10)
 
     def test_promotion(self):#洞见专题
-        b = loadDataBaseFromMyServer()[0]
-        print(b)
+        #b = loadDataBaseFromMyServer()[0]
+        #print(b)
         promotionurl = url + "/api/promotion/list?curPage=1&pageSize=10"
         r = requests.get(promotionurl,headers = headers)
         d = r.json()
         c = d['data']['list'][0]['id']#获取第一个专题id
         print(c)
         print("洞见专题数量：%s"%len(d['data']['list']))
-        self.assertEqual(len(d['data']['list']),b)
+        self.assertEqual(len(d['data']['list']),8)
 
     def test_topicDetail(self):#专题详情页
-        tdid = topicDetailsid()[0]
-        topicDetailurl = url + "/api/promotion/" + str(tdid)
+        #tdid = topicDetailsid()[0]
+        #topicDetailurl = url + "/api/promotion/" + str(tdid)
+        topicDetailurl = url + "/api/promotion/" + str(7)
         r = requests.get(topicDetailurl,headers = headers)
         d = r.json()
         print(topicDetailurl)
         print("该洞见专题id = %s"%(d['data']['id']))
-        self.assertEqual(d['data']['id'],tdid)
+        self.assertEqual(d['data']['id'],7)
 
     def test_departmenttype(self):#政策法规分类
         departmenturl = url + "/api/news-research/lawsdict"
@@ -163,15 +164,16 @@ class NewsTest(unittest.TestCase):
         print("独角兽新闻数 ： %s" % (d['data']['total']))
         self.assertGreaterEqual(d['data']['total'], 12557)
 
-    def test_company_dynamic(self):#独角兽
+    def test_company_dynamic(self):#公司动态
         company_dynamicurl =  url + "/api/news/list"
         data = {"reportTime": "", "industry": "", "reportType": [5], "keyword": "", "pageSize": 10, "curPage": 1}
         r = requests.post(company_dynamicurl, data, headers=headers)
         d = r.json()
-        print("公司动态新闻数 ： %s" % (d['data']['total']))
+        #print(d)
+        print("公司动态新闻数 ： %s" %(d['data']['total']))
         self.assertGreaterEqual(d['data']['total'], 84475)
 
-    def test_company_research(self):#独角兽
+    def test_company_research(self):#公司研究
         company_research_url =  url + "/api/news/list"
         data = {"reportTime": "", "industry": "", "reportType": [6], "keyword": "", "pageSize": 10, "curPage": 1}
         r = requests.post(company_research_url, data, headers=headers)
@@ -179,12 +181,21 @@ class NewsTest(unittest.TestCase):
         print("公司研究新闻数 ： %s" % (d['data']['total']))
         self.assertGreaterEqual(d['data']['total'], 16570)
 
-    def test_people_view(self):#独角兽
+    def test_people_view(self):#人物观点
         people_view_url =  url + "/api/news/list"
         data = {"reportTime": "", "industry": "", "reportType": [7], "keyword": "", "pageSize": 10, "curPage": 1}
         r = requests.post(people_view_url, data, headers=headers)
         d = r.json()
         print("人物观点新闻数 ： %s" % (d['data']['total']))
+        self.assertGreaterEqual(d['data']['total'], 12241)
+
+    def test_people_view001(self):#全部新闻报道类型为—其他
+        people_view_url =  url + "/api/news/list"
+        data = {"reportTime":"","industry":"","reportType":[0],"keyword":"","pageSize":10,"curPage":1}
+        #x = json.dumps(data)
+        r = requests.post(people_view_url, json = data, headers = headers)
+        d = r.json()
+        print("报道类型为—其他的新闻数 ： %s" % (d['data']['total']))
         self.assertGreaterEqual(d['data']['total'], 12241)
 
 if __name__ == '__main__':
