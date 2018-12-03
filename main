@@ -1,4 +1,4 @@
-from config import HTMLTestRunner
+from config import HTMLTestRunner002
 import unittest
 from unittest import TestLoader,TestSuite,TestCase
 from interface.index import MyTestCaseIndex,MYTestCaseNewinformation
@@ -21,6 +21,6 @@ if __name__ == '__main__':
     #filepath = 'H:/report.html'
     filepath = './report/report.html'
     ftp = open(filepath, 'wb')
-    runner = HTMLTestRunner.HTMLTestRunner(stream=ftp, title='鲸准接口平台')
+    runner = HTMLTestRunner002.HTMLTestRunner(stream=ftp, title='鲸准接口平台')
     runner.run(allTest())
     unittest.main()
