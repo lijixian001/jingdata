@@ -50,7 +50,7 @@ class NewsTest(unittest.TestCase):
         r = requests.get(newsletterurl,headers = headers)
         d = r.json()
         print("7*24H快讯数量：%s"%len(d['data']['list']))
-        self.assertEqual(len(d['data']['list']),10)
+        self.assertEqual(len(d['data']['list']),0)
 
     def test_promotion(self):#洞见专题
         #b = loadDataBaseFromMyServer()[0]
