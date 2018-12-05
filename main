@@ -9,8 +9,10 @@ def allTest():
     suite1 = TestLoader().loadTestsFromTestCase(MyTestCaseIndex)
     suite2 = TestLoader().loadTestsFromTestCase(MYTestCaseNewinformation)
     suite3 = TestLoader().loadTestsFromTestCase(NewsTest)
-    suite4 = TestLoader().loadTestsFromTestCase(InsightDataTest,HeaderselectTest,HeadersortTest)
-    alltests = TestSuite([suite1,suite2,suite3,suite4])
+    suite4 = TestLoader().loadTestsFromTestCase(InsightDataTest)
+    suite5 = TestLoader().loadTestsFromTestCase(HeaderselectTest)
+    suite6 = TestLoader().loadTestsFromTestCase(HeadersortTest)
+    alltests = TestSuite([suite1,suite2,suite3,suite4,suite5,suite6])
     return alltests
 
 if __name__ == '__main__':
