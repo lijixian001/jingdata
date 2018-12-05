@@ -29,6 +29,14 @@ def loadDataBaseFromMyServer(database='jingdata_saas'):
 
 class InsightDataTest(unittest.TestCase):
 
+    def test_menu(self): #洞见数据menu
+        menu_url = url + '/api/insight/menu'
+        r = requests.get(menu_url,headers = headers)
+        d = r.json()
+        x = len(d['data'][0]['children'])
+        print('【洞见数据左侧菜单栏第一个Menu有',x,'不同类型的公司列表】')
+        self.assertEqual(x,6)
+
     def test_allcompany(self):#全部公司列表
         allcompany_url = url + "/api/upgradefilter/getsearchdatabyobject"
         data = {
@@ -247,7 +255,7 @@ class HeaderselectTest(unittest.TestCase):
         print('创办时间是去年的筛选结果为： %s'%(d['data']['total']),'条')
         self.assertEqual(len(d['data']['data']),20)
 
-class HeadersortTest(unittest.TestCase): #表头字段排序
+class HeadersortTest(unittest.TestCase): #全部公司列表表头字段排序
 
     def test_hot_score_desc(self): #表头字段排序-热度-降序Desc
         headersort_url = url + '/api/upgradefilter/getsearchdatabyobject'
@@ -280,6 +288,32 @@ class HeadersortTest(unittest.TestCase): #表头字段排序
         d = r.json()
         print('全部公司列表热度趋势最低公司名称、及热度趋势值为： %s'%(d['data']['data'][0]['name']),'、%s'%(d['data']['data'][0]['stat_rank.hot_trend']))
         self.assertGreaterEqual(d['data']['data'][2]['stat_rank.hot_trend'],d['data']['data'][1]['stat_rank.hot_trend'])
+
+    def test_new_economy(self): #新经济公司列表
+        new_economy_url = url + '/api/company/search'
+        data = {"curPage":1,"pageSize":20,"type":"new_economy","sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[]"}
+        r = requests.post(new_economy_url,data,headers = headers)
+        d = r.json()
+        print('新经济公司数量为： %s'%(d['data']['total']))
+        self.assertGreaterEqual(d['data']['total'],148)
+
+    def test_c_industry(self): #新经济公司所属领域字典
+        c_industry_url = url + '/api/insight/dict_data?type=c_industry'
+        r = requests.get(c_industry_url,headers = headers)
+        d = r.json()
+        print('新经济公司所属领域字典有： %s'%len(d['data']),'个不同领域')
+        self.assertEqual(len(d['data']),28)
+
+    def test_c_area(self): #新经济公司所在地字典
+        c_area_url = url + '/api/insight/dict_data?type=c_area'
+        r = requests.get(c_area_url,headers = headers)
+        d = r.json()
+        x = len(d['data'])
+        print('【新经济公司所在地字典有:',x ,'个一级地区】')
+        self.assertEqual(x,35)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()

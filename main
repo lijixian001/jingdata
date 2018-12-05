@@ -3,13 +3,13 @@ import unittest
 from unittest import TestLoader,TestSuite,TestCase
 from interface.index import MyTestCaseIndex,MYTestCaseNewinformation
 from interface.news import NewsTest
-from interface.idata import InsightDataTest
+from interface.idata import InsightDataTest,HeaderselectTest,HeadersortTest
 # H:\seleuim\jingdata_saas_py是GitHub
 def allTest():
     suite1 = TestLoader().loadTestsFromTestCase(MyTestCaseIndex)
     suite2 = TestLoader().loadTestsFromTestCase(MYTestCaseNewinformation)
     suite3 = TestLoader().loadTestsFromTestCase(NewsTest)
-    suite4 = TestLoader().loadTestsFromTestCase(InsightDataTest)
+    suite4 = TestLoader().loadTestsFromTestCase(InsightDataTest,HeaderselectTest,HeadersortTest)
     alltests = TestSuite([suite1,suite2,suite3,suite4])
     return alltests
 
