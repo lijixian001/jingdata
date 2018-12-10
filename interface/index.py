@@ -123,7 +123,7 @@ class MYTestCaseNewinformation(unittest.TestCase):
         r = requests.get(newsurl)
         d = r.json()
         print("快讯数量： %s"%len(d['data']['list']))          #快讯数量
-        self.assertEqual(len(d['data']['list']),6)
+        self.assertGreaterEqual(6,len(d['data']['list']))
 
     def test_investment(self):#最新融资事件
         investmenturl = url + "/api/indexinfo/index-investment-list"
