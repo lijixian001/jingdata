@@ -4,15 +4,16 @@ from unittest import TestLoader,TestSuite,TestCase
 from interface.index import MyTestCaseIndex,MYTestCaseNewinformation
 from interface.news import NewsTest
 from interface.idata import InsightDataTest
+from interface.cytab import ProjectDetailsTest
 # H:\seleuim\jingdata_saas_py是GitHub
 def allTest():
     suite1 = TestLoader().loadTestsFromTestCase(MyTestCaseIndex)
     suite2 = TestLoader().loadTestsFromTestCase(MYTestCaseNewinformation)
     suite3 = TestLoader().loadTestsFromTestCase(NewsTest)
     suite4 = TestLoader().loadTestsFromTestCase(InsightDataTest)
-    #suite5 = TestLoader().loadTestsFromTestCase(HeaderselectTest)  #全部公司表头字段筛选
+    suite5 = TestLoader().loadTestsFromTestCase(ProjectDetailsTest)  #全部公司表头字段筛选
     #suite5 = TestLoader().loadTestsFromTestCase(HeadersortTest) #全部公司表头字段排序
-    alltests = TestSuite([suite1,suite2,suite3,suite4])
+    alltests = TestSuite([suite1,suite2,suite3,suite4,suite5])
     return alltests
 
 if __name__ == '__main__':
