@@ -21,9 +21,9 @@ class ProjectDetailsTest(unittest.TestCase):
         r = requests.get(company_url,headers = headers)
         d = r.json()
         x = d['data']['list']['info']['cid']
-        #x = d['data']['menu'][0]['title']
         print(x)
         self.assertEqual(x,str(albb_id))
+
 
 
 
