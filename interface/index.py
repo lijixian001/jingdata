@@ -32,6 +32,7 @@ def loadDataBaseFromMyServer(database='jingdata_saas'):
 class MyTestCaseIndex(unittest.TestCase):
 
     def test_indexdata(self):#首页
+        '''首页接口'''
         #a = bannerid()[0]
         #print(a)
         iurl = url + "/api/indexinfo/indexdata"
