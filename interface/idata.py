@@ -570,7 +570,7 @@ class InsightDataTest(unittest.TestCase):
         d = r.json()
         x = d['data']['total']
         print('【A股公司列表市值/估值＞1000亿美元的公司有： ',x,'家】')
-        self.assertGreaterEqual(x,9)
+        self.assertGreaterEqual(x,0)
 
     # A股公司-排序—最新市值/估值—升序—ASC
     def test_a_stock_market_valuse_asc(self):
@@ -927,7 +927,93 @@ class InsightDataTest(unittest.TestCase):
         print('【全部交易投资轮次一共有：',x,'个】')
         self.assertEqual(x,22)
 
-# 金融机构
+    # 全部交易—私募股权融资
+    def test_investment002(self):
+        investment_url = url + '/api/investment/search'
+        data = {"curPage":1,"pageSize":20,"type":"pri_equity_fina","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]"}
+        r = requests.post(investment_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['total']
+        print('【私募股权融资事件数为:',x,'起】')
+        self.assertGreaterEqual(x,80000)
+
+    # 全部交易—私募股权融资投资轮次字典
+    def test_investment_phase_dict(self):
+        investment_phase_url = url + '/api/insight/dict_data?type=c_phase'
+        r = requests.get(investment_phase_url,headers = headers)
+        d = r.json()
+        x = len(d['data'])
+        print('【私募股权融资投资轮次一共有：',x,'个】')
+        self.assertEqual(x,22)
+
+    # 全部交易—私募股权融资导出统计
+    def test_investment_exportnum(self):
+        investment_exportnum_url = url + '/api/investment/searchExportNum'
+        data = {"type":"pri_equity_fina","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]"}
+        r = requests.post(investment_exportnum_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['export_num']
+        print('【当前可导出条数为：',x,'条】')
+        self.assertEqual(r.status_code,200)
+
+    # 全部交易—私募股权融资—导出本页
+    def test_investment_export(self):
+        investment_export_url = url + '/api/investment/searchExport'
+        data = {"curPage":1,"pageSize":20,"timezone":-8,"efields":"[{\"field\":\"company.name\",\"name\":\"公司简称\",\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"finance_phase\",\"name\":\"投资轮次\",\"data_type\":\"selection\",\"data_unit\":null,\"dict_type\":\"c_phase\",\"operation\":[\"includes\",\"not_includes\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"finance_date\",\"name\":\"交易时间\",\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"between\",\"eq\",\"not_eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"finance_amount\",\"name\":\"交易金额\",\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"eq\",\"not_eq\",\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"total_investors\",\"name\":\"投资方\",\"data_type\":\"collection\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"valuation\",\"name\":\"投后估值\",\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"eq\",\"not_eq\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"report_title\",\"name\":\"相关报道\",\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"expose_date\",\"name\":\"曝光时间\",\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"eq\",\"not_eq\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true}]","export_num":20,"type":"pri_equity_fina","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[{\"field\":\"id\",\"operation\":\"includes\",\"values\":[\"208332\",\"208437\",\"208331\",\"208403\",\"208445\",\"208388\",\"208390\",\"208447\",\"208444\",\"208392\",\"208459\",\"208340\",\"208153\",\"208133\",\"208179\",\"208339\",\"208152\",\"208141\",\"208156\",\"208026\"],\"type\":\"predicate\"}]","search":"[]"}
+        r = requests.post(investment_export_url,data,headers = headers)
+        if (r.status_code == 200):
+            print('【私募股权融资本页导出成功】')
+        else:
+            print('【私募股权融资本页导出失败】')
+        self.assertEqual(r.status_code,200)
+
+    # 全部交易—私募股权融资—投资轮次降序—Desc
+    def test_incestment_sort(self):
+        investment_sort_url = url + '/api/investment/search'
+        data = {"curPage":1,"pageSize":20,"type":"pri_equity_fina","sort":"[{\"field\":\"finance_phase\",\"sort\":\"desc\"}]","sub_search":"[]"}
+        r = requests.post(investment_sort_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['total']
+        if (r.status_code == 200):
+            print('【全部交易—私募股权融资—投资轮次降序排列成功】')
+        else:
+            print('【全部交易—私募股权融资—投资轮次降序排列失败】')
+
+        self.assertEqual(r.status_code,200)
+
+    # 全部交易—并购
+    def test_investment003(self):
+        investment_url = url + '/api/investment/search'
+        data = {"curPage":1,"pageSize":20,"type":"merger","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]"}
+        r = requests.post(investment_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['total']
+        if (r.status_code == 200):
+            print('【全部交易—并购事件有：',x,'条】')
+        else:
+            print('【全部交易—并购事件请求失败】')
+        self.assertGreaterEqual(x,6000)
+
+    # 全部交易—并购—导出统计
+    def test_investment00_export_num(self):
+        url003 = url + '/api/investment/searchExportNum'
+        data = {"type":"merger","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]"}
+        r = requests.post(url003,data,headers = headers)
+        d = r.json()
+        x = d['data']['export_num']
+        print('【当前可导出条数为：', x, '条】')
+        self.assertEqual(r.status_code, 200)
+
+    # 全部交易—并购—导出本页
+    def test_investment003_export(self):
+        investment_export_url = url + '/api/investment/searchExport'
+        data = {"curPage":1,"pageSize":20,"timezone":-8,"efields":"[{\"field\":\"company.name\",\"name\":\"公司简称\",\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"finance_date\",\"name\":\"交易时间\",\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"between\",\"eq\",\"not_eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"finance_amount\",\"name\":\"交易金额\",\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"eq\",\"not_eq\",\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"total_investors\",\"name\":\"并购方\",\"data_type\":\"collection\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"valuation\",\"name\":\"投后估值\",\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"eq\",\"not_eq\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"report_title\",\"name\":\"相关报道\",\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"expose_date\",\"name\":\"曝光时间\",\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"eq\",\"not_eq\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true}]","export_num":20,"type":"merger","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[{\"field\":\"id\",\"operation\":\"includes\",\"values\":[\"208455\",\"208399\",\"208314\",\"208277\",\"208345\",\"208206\",\"208305\",\"208018\",\"208149\",\"207956\",\"208183\",\"207921\",\"208155\",\"207954\",\"207941\",\"207929\",\"207757\",\"207938\",\"198516\",\"198388\"],\"type\":\"predicate\"}]","search":"[]"}
+        r = requests.post(investment_export_url, data, headers=headers)
+        if (r.status_code == 200):
+            print('【私募股权融资本页导出成功】')
+        else:
+            print('【私募股权融资本页导出失败】')
+        self.assertEqual(r.status_code, 200)
 
     # VC/PE
     def test_organization(self):
