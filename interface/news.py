@@ -45,14 +45,16 @@ def topicDetailsid(database='jingdata_saas'):#专题数量  r = requests.post(he
 
 class NewsTest(unittest.TestCase):
 
-    def test_newsletter(self):#7✖24H快讯
+    def test_newsletter(self):
+        '''7✖24H快讯'''
         newsletterurl = url + "/api/news-letter/list?pageSize=10&id="
         r = requests.get(newsletterurl,headers = headers)
         d = r.json()
         print("7*24H快讯数量：%s"%len(d['data']['list']))
         self.assertEqual(len(d['data']['list']),10)
 
-    def test_promotion(self):#洞见专题
+    def test_promotion(self):
+        '''洞见专题'''
         #b = loadDataBaseFromMyServer()[0]
         #print(b)
         promotionurl = url + "/api/promotion/list?curPage=1&pageSize=10"
@@ -63,7 +65,8 @@ class NewsTest(unittest.TestCase):
         print("洞见专题数量：%s"%len(d['data']['list']))
         self.assertEqual(len(d['data']['list']),8)
 
-    def test_topicDetail(self):#专题详情页
+    def test_topicDetail(self):
+        '''专题详情页'''
         #tdid = topicDetailsid()[0]
         #topicDetailurl = url + "/api/promotion/" + str(tdid)
         topicDetailurl = url + "/api/promotion/" + str(7)
@@ -99,8 +102,11 @@ class NewsTest(unittest.TestCase):
         newslisturl = url + "/api/news/list"
         r = requests.post(newslisturl,headers = headers)
         d = r.json()
-        print('全部新闻数量 ： %s'%(d['data']['total']))
-        self.assertGreaterEqual(d['data']['total'],203272)
+        if r.status_code == 200 :
+            print('全部新闻数量 ： %s'%(d['data']['total']))
+        else:
+            print('【全部新闻数量不对】')
+        self.assertGreaterEqual(d['data']['total'],2032720)
 
     def test_industrydict(self):#新闻情报行业字典
         industrydicturl = url + "/api/redis/dictcache?type=2&key=crm-dict_industry"
@@ -169,7 +175,6 @@ class NewsTest(unittest.TestCase):
         data = {"reportTime": "", "industry": "", "reportType": [5], "keyword": "", "pageSize": 10, "curPage": 1}
         r = requests.post(company_dynamicurl, data, headers=headers)
         d = r.json()
-        #print(d)
         print("公司动态新闻数 ： %s" %(d['data']['total']))
         self.assertGreaterEqual(d['data']['total'], 84475)
 
