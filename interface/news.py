@@ -102,11 +102,11 @@ class NewsTest(unittest.TestCase):
         newslisturl = url + "/api/news/list"
         r = requests.post(newslisturl,headers = headers)
         d = r.json()
-        if r.status_code == 200 :
+        if (r.status_code == 200):
             print('全部新闻数量 ： %s'%(d['data']['total']))
         else:
             print('【全部新闻数量不对】')
-        self.assertGreaterEqual(d['data']['total'],2032720)
+        self.assertGreaterEqual(d['data']['total'],203272)
 
     def test_industrydict(self):#新闻情报行业字典
         industrydicturl = url + "/api/redis/dictcache?type=2&key=crm-dict_industry"

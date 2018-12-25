@@ -1006,14 +1006,30 @@ class InsightDataTest(unittest.TestCase):
 
     # 全部交易—并购—导出本页
     def test_investment003_export(self):
+        ''' 全部交易—并购—导出本页 '''
         investment_export_url = url + '/api/investment/searchExport'
         data = {"curPage":1,"pageSize":20,"timezone":-8,"efields":"[{\"field\":\"company.name\",\"name\":\"公司简称\",\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"finance_date\",\"name\":\"交易时间\",\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"between\",\"eq\",\"not_eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"finance_amount\",\"name\":\"交易金额\",\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"eq\",\"not_eq\",\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"total_investors\",\"name\":\"并购方\",\"data_type\":\"collection\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"valuation\",\"name\":\"投后估值\",\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"eq\",\"not_eq\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"report_title\",\"name\":\"相关报道\",\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"expose_date\",\"name\":\"曝光时间\",\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"eq\",\"not_eq\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true}]","export_num":20,"type":"merger","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[{\"field\":\"id\",\"operation\":\"includes\",\"values\":[\"208455\",\"208399\",\"208314\",\"208277\",\"208345\",\"208206\",\"208305\",\"208018\",\"208149\",\"207956\",\"208183\",\"207921\",\"208155\",\"207954\",\"207941\",\"207929\",\"207757\",\"207938\",\"198516\",\"198388\"],\"type\":\"predicate\"}]","search":"[]"}
         r = requests.post(investment_export_url, data, headers=headers)
         if (r.status_code == 200):
-            print('【私募股权融资本页导出成功】')
+            print('【并购本页导出成功】')
         else:
-            print('【私募股权融资本页导出失败】')
+            print('【并购本页导出失败】')
         self.assertEqual(r.status_code, 200)
+
+    # 交易—上市
+    def test_investment004(self):
+        '''洞见数据—交易—上市列表'''
+        investment_url = url + '/api/investment/search'
+        data = {"curPage":1,"pageSize":20,"type":"ipo","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]"}
+        r = requests.post(investment_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['total']
+        if r.status_code == 200:
+            print('【洞见数据—交易—上市公司数量为：',x,'家】')
+        else:
+            print('【洞见数据—交易—上市列表获取失败】')
+        self.assertGreaterEqual(x,8000)
+
 
     # VC/PE
     def test_organization(self):
