@@ -5,15 +5,46 @@ from interface.index import MyTestCaseIndex,MYTestCaseNewinformation
 from interface.news import NewsTest
 from interface.idata import InsightDataTest
 from interface.cytab import ProjectDetailsTest
+from interface.insight import InsightTest
+from email.header import Header
+from  email.mime.text import MIMEText
+import smtplib
+import os
 # H:\seleuim\jingdata_saas_py是GitHub
+'''
+# ==========定义发送邮件==========
+def send_mail(file_new):
+    f = open(file_new,'rb')
+    mail_body = f.read()
+    f.close()
+
+    msg = MIMEText(mail_body,'html','utf-8')
+    msg['Subject'] = Header('自动化测试报告','utf-8')
+
+    smtp = smtplib.SMTP()
+    smtp.connect('smtp.qq.com')
+    smtp.login('1174669552@qq.com','LI18632181245li')
+    smtp.sendmail('1174669552@qq.com','lijixian@jingdata.com',msg.as_string())
+    smtp.quit()
+    print('email has send out!')
+
+# ==========查找测试报告目录，找到最新生成的测试报告文件==========
+def new_report(testreport):
+    lists = os.listdir(testreport)
+    lists.sort(key=lambda fn: os.path.getmtime(testreport + "\\" + fn))
+    file_new = os.path.join(testreport,lists[-1])
+    print(file_new)
+    return file_new
+'''
 def allTest():
     suite1 = TestLoader().loadTestsFromTestCase(MyTestCaseIndex)
     suite2 = TestLoader().loadTestsFromTestCase(MYTestCaseNewinformation)
     suite3 = TestLoader().loadTestsFromTestCase(NewsTest)
     suite4 = TestLoader().loadTestsFromTestCase(InsightDataTest)
     suite5 = TestLoader().loadTestsFromTestCase(ProjectDetailsTest)  #全部公司表头字段筛选
-    #suite5 = TestLoader().loadTestsFromTestCase(HeadersortTest) #全部公司表头字段排序
-    alltests = TestSuite([suite1,suite2,suite3,suite4,suite5])
+    suite6 = TestLoader().loadTestsFromTestCase(InsightTest) #全部公司表头字段排序
+    alltests = TestSuite([suite1,suite2,suite3,suite4,suite5,suite6])
+    #alltests = TestSuite([suite1])
     return alltests
 
 if __name__ == '__main__':
@@ -22,8 +53,21 @@ if __name__ == '__main__':
     #filepath = 'C:/Program Files (x86)/Jenkins/workspace/pytest002/report/1eport.html'
     #filepath = 'C:/Program Files (x86)/Jenkins/workspace/pytest002/report/1eport.html'
     #filepath = 'H:/report.html'
+    #test_report = 'H:\seleuim\jingdata_saas_py\report'
     filepath = './report/report.html'
     ftp = open(filepath, 'wb')
     runner = HTMLTestRunner002.HTMLTestRunner(stream=ftp, title='鲸准接口平台')
     runner.run(allTest())
     unittest.main()
+'''
+    new_report = new_report(filepath)
+    send_mail(new_report)
+'''
+
+
+
+    #filepath = './report/report.html'
+    #ftp = open(filepath, 'wb')
+    #runner = HTMLTestRunner002.HTMLTestRunner(stream=ftp, title='鲸准接口平台')
+    #runner.run(allTest())
+    #unittest.main()
