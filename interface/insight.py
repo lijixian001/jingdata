@@ -452,6 +452,60 @@ class InsightTest(unittest.TestCase):
         print('【当前剩余导出条数：',d['data']['export_num'],'】')
         self.assertEqual(r.status_code,200)
 
+    #def test_investment004_export(self):
+        #'''洞见数据—交易—上市-导出本页'''
+        #investment_export_url = url + ''
+
+    def test_investment005_time_asc(self):
+        '''洞见数据—交易—上市—交易时间升序'''
+        investment_url = url + '/api/investment/search'
+        data = {"curPage":1,"pageSize":20,"type":"ipo","sort":"[{\"field\":\"finance_date\",\"sort\":\"asc\"}]","sub_search":"[]"}
+        r = requests.post(investment_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['total']
+        if r.status_code == 200 :
+            print('【洞见数据—交易—上市公司有：',x,'家】')
+        else:
+            print('【洞见数据—交易—上市交易时间排序失败】')
+        self.assertGreaterEqual(x,8000)
+
+    def test_investment005(self):
+        '''洞见数据—交易—上市后/定增'''
+        investment_url = url + '/api/investment/search'
+        data = {"curPage":1,"pageSize":20,"type":"after_ipo","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]"}
+        r = requests.post(investment_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['total']
+        print('【洞见数据—交易—上市后/定增公司有',x,'家】')
+        self.assertGreaterEqual(x,4000)
+
+    def test_investment005_dict(self):
+        '''洞见数据—交易—上市后/定增轮次字典'''
+        investment_dict_url = url + '/api/insight/dict_data?type=c_phase'
+        r = requests.get(investment_dict_url,headers = headers)
+        d = len(r.json()['data'])
+        print('【洞见数据—交易—上市后/定增轮次字典内字段数量有：',d,'个】')
+        self.assertEqual(d,22)
+
+    def test_investment005_exportNum(self):
+        '''洞见数据—交易—上市后/定增导出统计'''
+        investment_exportNum_url = url + '/api/investment/searchExportNum'
+        data = {"type":"after_ipo","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]"}
+        r = requests.post(investment_exportNum_url,data,headers = headers)
+        d = r.json()['data']['export_num']
+        print('【当前剩余导出条数为：',d,'条】')
+        self.assertEqual(r.status_code,200)
+
+    def test_investment005_time_desc(self):
+        '''洞见数据—交易—上市后/定增—交易时间降序'''
+        investment_url = url + '/api/investment/search'
+        data = {"curPage":1,"pageSize":20,"type":"after_ipo","sort":"[{\"field\":\"finance_date\",\"sort\":\"desc\"}]","sub_search":"[]"}
+        r = requests.post(investment_url,data,headers = headers)
+        d = r.json()
+        x = d['data']['total']
+        print('【洞见数据—交易—上市后/定增公司有',x,'家】')
+        self.assertGreaterEqual(x,4000)
+
     def test_organization(self):
         '''洞见数据—VC/PE'''
         organization_url = url + '/api/upgradefilter/getsearchdatabyobject'
