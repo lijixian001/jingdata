@@ -106,7 +106,7 @@ class NewsTest(unittest.TestCase):
             print('全部新闻数量 ： %s'%(d['data']['total']))
         else:
             print('【全部新闻数量不对】')
-        self.assertGreaterEqual(d['data']['total'],203272)
+        self.assertGreaterEqual(d['data']['total'],170000)
 
     def test_industrydict(self):#新闻情报行业字典
         industrydicturl = url + "/api/redis/dictcache?type=2&key=crm-dict_industry"
@@ -136,7 +136,7 @@ class NewsTest(unittest.TestCase):
         r = requests.post(newstimeurl,data,headers = headers)
         d = r.json()
         print('处于2018-11-01_2018-11-13时间段的新闻数 ： %s'%(d['data']['total'] ))
-        self.assertGreaterEqual(d['data']['total'],4338)
+        self.assertGreaterEqual(d['data']['total'],4000)
 
     def test_newest(self):#最新获投
         newesturl =  url + "/api/news/list"
@@ -176,7 +176,7 @@ class NewsTest(unittest.TestCase):
         r = requests.post(company_dynamicurl, data, headers=headers)
         d = r.json()
         print("公司动态新闻数 ： %s" %(d['data']['total']))
-        self.assertGreaterEqual(d['data']['total'], 84475)
+        self.assertGreaterEqual(d['data']['total'], 50000)
 
     def test_company_research(self):#公司研究
         company_research_url =  url + "/api/news/list"
