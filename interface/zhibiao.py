@@ -85,7 +85,7 @@ class LibraryTest(unittest.TestCase):
         library_download_url = url + '/api/macro/download?id=' + str(9607081) + '&timezone=-8'
         r = requests.get(library_download_url,headers = headers)
         if (r.status_code == 200):
-            print('【新经济行业—新科技—大数据—国内大数据—市场规模：大数据：中国—导出成功')
+            print('【新经济行业—新科技—大数据—国内大数据—市场规模：大数据：中国—导出成功】')
         else:
             print('【新经济行业—新科技—大数据—国内大数据—市场规模：大数据：中国—导出失败】')
         self.assertEqual(r.status_code,200)
