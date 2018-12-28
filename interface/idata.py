@@ -31,6 +31,7 @@ class InsightDataTest(unittest.TestCase):
 
     # 新经济公司列表
     def test_new_economy(self):
+        '''新经济公司列表'''
         new_economy_url = url + '/api/company/search'
         data = {"curPage":1,"pageSize":20,"type":"new_economy","sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[]"}
         r = requests.post(new_economy_url,data,headers = headers)
@@ -40,16 +41,17 @@ class InsightDataTest(unittest.TestCase):
 
     # 新经济公司导出全部—剩余条数计算
     def test_new_conomy_exportnum(self):
+        '''新经济公司导出全部—剩余条数计算'''
         exportnum_url = url + '/api/company/searchExportNum'
         data = {"type":"new_economy","sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]"}
         r = requests.post(exportnum_url,data,headers = headers)
         d = r.json()
-        print(d)
         print('【本次筛选新经济公司结果为：',d['data']['total'],'条】')
         self.assertGreaterEqual(d['data']['total'],100)
 
     # 新经济公司列表导出
     def test_new_conomy_export(self):
+        '''新经济公司列表导出'''
         export_url = url + '/api/company/searchExport'
         data = {"curPage":1,"pageSize":20,"timezone":-8,"efields":"[{\"field\":\"name\",\"name\":\"公司简称\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"market_value\",\"name\":\"最新市值/估值\",\"is_array\":false,\"is_format_unit\":true,\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gt\",\"lt\",\"between\",\"eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"industry\",\"name\":\"所属领域\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"selection\",\"data_unit\":null,\"dict_type\":\"c_industry\",\"operation\":[\"includes\",\"not_includes\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"short_description\",\"name\":\"一句话简介\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":false,\"search_enabled\":true},{\"field\":\"establish_date\",\"name\":\"成立时间\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"address\",\"name\":\"所在地\",\"is_array\":true,\"is_format_unit\":false,\"data_type\":\"selection\",\"data_unit\":null,\"dict_type\":\"c_area\",\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"pe_financing_amount\",\"name\":\"私募股权融资总额\",\"is_array\":false,\"is_format_unit\":true,\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gt\",\"lt\",\"between\",\"eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"stock_market_short_name\",\"name\":\"资本市场\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"text\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"includes\",\"not_includes\",\"includes_all\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"ipo_financing_amount\",\"name\":\"IPO募集金额\",\"is_array\":false,\"is_format_unit\":true,\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gt\",\"lt\",\"between\",\"eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"listed_date\",\"name\":\"上市时间\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"date\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"share_placement_amount\",\"name\":\"配股与定增总额\",\"is_array\":false,\"is_format_unit\":true,\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gt\",\"lt\",\"between\",\"eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"annual_turnover\",\"name\":\"年营业额\",\"is_array\":false,\"is_format_unit\":true,\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gt\",\"lt\",\"between\",\"eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"annual_profit\",\"name\":\"年利润额\",\"is_array\":false,\"is_format_unit\":true,\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gt\",\"lt\",\"between\",\"eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"close_price\",\"name\":\"最新股价\",\"is_array\":false,\"is_format_unit\":true,\"data_type\":\"amount\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"gt\",\"lt\",\"between\",\"eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"change_price_pct\",\"name\":\"最新涨跌幅\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"percent\",\"data_unit\":\"%\",\"dict_type\":null,\"operation\":[\"gte\",\"lte\",\"between\",\"eq\",\"not_eq\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"pe_ttm\",\"name\":\"P/E(TTM)\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"float\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"eq\",\"not_eq\",\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"pb\",\"name\":\"P/B(LF)\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"float\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"eq\",\"not_eq\",\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true},{\"field\":\"ps\",\"name\":\"P/S(TTM)\",\"is_array\":false,\"is_format_unit\":false,\"data_type\":\"float\",\"data_unit\":null,\"dict_type\":null,\"operation\":[\"eq\",\"not_eq\",\"gte\",\"lte\",\"between\"],\"sort_enabled\":true,\"search_enabled\":true}]","export_num":163,"type":"new_economy","sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]"}
         r = requests.post(export_url,data,headers = headers)
@@ -61,6 +63,7 @@ class InsightDataTest(unittest.TestCase):
 
     # 新经济公司全部字段
     def test_new_economy_all_fields(self):
+        '''新经济公司全部字段'''
         new_economy_url = url + '/api/company/search'
         data = {
             "curPage":1,
@@ -75,8 +78,8 @@ class InsightDataTest(unittest.TestCase):
         print('【新经济公司所有表头字段有：',x,'个】')
         self.assertEqual(x,43)
 
-    # 新经济公司默认展示字段
     def test_new_economy_all_fields(self):
+        '''新经济公司默认展示字段'''
         new_economy_url = url + '/api/company/search'
         data = {
             "curPage":1,
@@ -91,16 +94,16 @@ class InsightDataTest(unittest.TestCase):
         print('【新经济公司所有表头字段有：',x,'个】')
         self.assertEqual(x,18)
 
-    # 新经济公司所属领域字典
     def test_new_economy_c_industry(self):
+        '''新经济公司所属领域字典'''
         c_industry_url = url + '/api/insight/dict_data?type=c_industry'
         r = requests.get(c_industry_url,headers = headers)
         d = r.json()
         print('【新经济公司所属领域字典有： %s'%len(d['data']),'个不同领域】')
         self.assertEqual(len(d['data']),28)
 
-    # 新经济公司所在地字典
     def test_new_economy_c_area(self):
+        '''新经济公司所在地字典'''
         c_area_url = url + '/api/insight/dict_data?type=c_area'
         r = requests.get(c_area_url,headers = headers)
         d = r.json()
@@ -112,6 +115,7 @@ class InsightDataTest(unittest.TestCase):
 
     # 新经济公司-筛选—公司简称
     def test_new_economy_select_name(self):
+        '''新经济公司-筛选—公司简称'''
         new_economy_url = url + '/api/company/search'
         data = {"curPage":1,"pageSize":20,"type":"new_economy","sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[{\"field\":\"name\",\"operation\":\"includes\",\"values\":[\"阿里巴巴\"],\"type\":\"predicate\"}]"}
         r = requests.post(new_economy_url,data,headers = headers)
