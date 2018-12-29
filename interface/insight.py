@@ -132,6 +132,7 @@ class InsightTest(unittest.TestCase):
 
     # 高级检索-报道媒体
     def test_all_company_getdefaulttagwebsite(self):
+        '''高级检索—报道媒体'''
         getdefaulttagwebsite_url = url + '/api/search/getdefaulttagwebsite?type=0'
         r = requests.get(getdefaulttagwebsite_url, headers=headers)
         d = r.json()
