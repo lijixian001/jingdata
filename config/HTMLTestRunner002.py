@@ -171,17 +171,17 @@ class Template_mixin(object):
     # ------------------------------------------------------------------------
     # HTML Template
 
-    HTML_TMPL = r"""<?xml version="1.0" encoding="UTF-8"?>
+    """HTML_TMPL = r<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>%(title)s</title>
-    <meta name="generator" content="%(generator)s"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    %(stylesheet)s
+<title>%(title)s</title>
+<meta name="generator" content="%(generator)s"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+%(stylesheet)s
 </head>
 <body >
 <script language="javascript" type="text/javascript">
@@ -193,76 +193,76 @@ output_list = Array();
 3:All     //pt none, ft none
 */
 function showCase(level) {
-    trs = document.getElementsByTagName("tr");
-    for (var i = 0; i < trs.length; i++) {
-        tr = trs[i];
-        id = tr.id;
-        if (id.substr(0,2) == 'ft') {
-            if (level == 2 || level == 0 ) {
-                tr.className = 'hiddenRow';
-            }
-            else {
-                tr.className = '';
-            }
-        }
-        if (id.substr(0,2) == 'pt') {
-            if (level < 2) {
-                tr.className = 'hiddenRow';
-            }
-            else {
-                tr.className = '';
-            }
-        }
-    }
-    //加入【详细】切换文字变化 --Findyou
-    detail_class=document.getElementsByClassName('detail');
-   //console.log(detail_class.length)
-   if (level == 3) {
-      for (var i = 0; i < detail_class.length; i++){
-         detail_class[i].innerHTML="收起"
-      }
-   }
-   else{
-         for (var i = 0; i < detail_class.length; i++){
-         detail_class[i].innerHTML="详细"
-      }
-   }
-}
-function showClassDetail(cid, count) {
-    var id_list = Array(count);
-    var toHide = 1;
-    for (var i = 0; i < count; i++) {
-        //ID修改 点 为 下划线 -Findyou
-        tid0 = 't' + cid.substr(1) + '_' + (i+1);
-        tid = 'f' + tid0;
-        tr = document.getElementById(tid);
-        if (!tr) {
-            tid = 'p' + tid0;
-            tr = document.getElementById(tid);
-        }
-        id_list[i] = tid;
-        if (tr.className) {
-            toHide = 0;
-        }
-    }
-    for (var i = 0; i < count; i++) {
-        tid = id_list[i];
-        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
-        if (toHide) {
-            document.getElementById(tid).className = 'hiddenRow';
-            document.getElementById(cid).innerText = "详细"
+trs = document.getElementsByTagName("tr");
+for (var i = 0; i < trs.length; i++) {
+    tr = trs[i];
+    id = tr.id;
+    if (id.substr(0,2) == 'ft') {
+        if (level == 2 || level == 0 ) {
+            tr.className = 'hiddenRow';
         }
         else {
-            document.getElementById(tid).className = '';
-            document.getElementById(cid).innerText = "收起"
+            tr.className = '';
+        }
+    }
+    if (id.substr(0,2) == 'pt') {
+        if (level < 2) {
+            tr.className = 'hiddenRow';
+        }
+        else {
+            tr.className = '';
         }
     }
 }
+//加入【详细】切换文字变化 --Findyou
+detail_class=document.getElementsByClassName('detail');
+//console.log(detail_class.length)
+if (level == 3) {
+  for (var i = 0; i < detail_class.length; i++){
+     detail_class[i].innerHTML="收起"
+  }
+}
+else{
+     for (var i = 0; i < detail_class.length; i++){
+     detail_class[i].innerHTML="详细"
+  }
+}
+}
+function showClassDetail(cid, count) {
+var id_list = Array(count);
+var toHide = 1;
+for (var i = 0; i < count; i++) {
+    //ID修改 点 为 下划线 -Findyou
+    tid0 = 't' + cid.substr(1) + '_' + (i+1);
+    tid = 'f' + tid0;
+    tr = document.getElementById(tid);
+    if (!tr) {
+        tid = 'p' + tid0;
+        tr = document.getElementById(tid);
+    }
+    id_list[i] = tid;
+    if (tr.className) {
+        toHide = 0;
+    }
+}
+for (var i = 0; i < count; i++) {
+    tid = id_list[i];
+    //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+    if (toHide) {
+        document.getElementById(tid).className = 'hiddenRow';
+        document.getElementById(cid).innerText = "详细"
+    }
+    else {
+        document.getElementById(tid).className = '';
+        document.getElementById(cid).innerText = "收起"
+    }
+}
+}
 function html_escape(s) {
-    s = s.replace(/&/g,'&amp;');
-    s = s.replace(/</g,'&lt;');
-    s = s.replace(/>/g,'&gt;');
-    return s;
+s = s.replace(/&/g,'&amp;');
+s = s.replace(/</g,'&lt;');
+s = s.replace(/>/g,'&gt;');
+return s;
 }
 </script>
 %(heading)s
