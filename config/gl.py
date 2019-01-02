@@ -3,7 +3,9 @@ import unittest
 
 map_id = [] #mychain 新建产业图谱id
 draft_id = []
+# 阿里巴巴项目详情页
 albb_id = 3627
+operation_id = 280
 
 
 # 指标库

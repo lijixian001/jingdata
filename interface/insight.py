@@ -442,7 +442,7 @@ class InsightTest(unittest.TestCase):
             print('【洞见数据—交易—上市公司数量为：',x,'家】')
         else:
             print('【洞见数据—交易—上市列表获取失败】')
-        self.assertGreaterEqual(x,7997) #原值8082→7997
+        self.assertGreaterEqual(x,7200) #原值8082→7997
 
     def test_investement004_exportNum(self):
         '''洞见数据—交易—上市—导出统计'''
@@ -464,7 +464,7 @@ class InsightTest(unittest.TestCase):
             print('【洞见数据—交易—上市公司有：',x,'家】')
         else:
             print('【洞见数据—交易—上市交易时间排序失败】')
-        self.assertGreaterEqual(x,7997) #原值8082→7997
+        self.assertGreaterEqual(x,7200) #原值8082→7997
 
     def test_investment005(self):
         '''洞见数据—交易—上市后/定增'''
