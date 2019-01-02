@@ -442,7 +442,7 @@ class InsightTest(unittest.TestCase):
             print('【洞见数据—交易—上市公司数量为：',x,'家】')
         else:
             print('【洞见数据—交易—上市列表获取失败】')
-        self.assertGreaterEqual(x,8000)
+        self.assertGreaterEqual(x,7200)
 
     def test_investement004_exportNum(self):
         '''洞见数据—交易—上市—导出统计'''
@@ -452,10 +452,6 @@ class InsightTest(unittest.TestCase):
         d = r.json()
         print('【当前剩余导出条数：',d['data']['export_num'],'】')
         self.assertEqual(r.status_code,200)
-
-    #def test_investment004_export(self):
-        #'''洞见数据—交易—上市-导出本页'''
-        #investment_export_url = url + ''
 
     def test_investment005_time_asc(self):
         '''洞见数据—交易—上市—交易时间升序'''
@@ -468,7 +464,7 @@ class InsightTest(unittest.TestCase):
             print('【洞见数据—交易—上市公司有：',x,'家】')
         else:
             print('【洞见数据—交易—上市交易时间排序失败】')
-        self.assertGreaterEqual(x,8000)
+        self.assertGreaterEqual(x,7200)
 
     def test_investment005(self):
         '''洞见数据—交易—上市后/定增'''
