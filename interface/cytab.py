@@ -229,6 +229,58 @@ class ProjectDetailsTest(unittest.TestCase):
         print('【阿里巴巴详情页—财务数据menu有：',x0,'个】')
         self.assertEqual(x0,5)
 
+    def test_company_finance_abstract_download(self):
+        '''阿里巴巴详情页—财务数据—财务摘要导出'''
+        finance_download_url = url + '/api/company/finance/abstract?cid=' + str(albb_id) + '&is_export=1&report_type=-1&select_date=0&unit=100000000'
+        r = requests.get(finance_download_url,headers = headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—财务数据—财务摘要导出成功】')
+        else:
+            pass
+        self.assertEqual(r.status_code,200)
+
+    def test_company_finance_profit_download(self):
+        '''阿里巴巴详情页—财务数据—利润表导出'''
+        finance_download_url = url + '/api/company/finance/abstract?cid=' + str(albb_id) + '&is_export=1&report_type=-1&select_date=1000&unit=100000000'
+        r = requests.get(finance_download_url,headers = headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—财务数据—利润表导出成功】')
+        else:
+            pass
+        self.assertEqual(r.status_code,200)
+
+    def test_company_finance_balance_download(self):
+        '''阿里巴巴详情页—财务数据—资产负债表导出'''
+        finance_download_url = url + '/api/company/finance/balance?cid=' + str(albb_id) + '&is_export=1&report_type=-1&select_date=1000&unit=100000000'
+        r = requests.get(finance_download_url,headers = headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—财务数据—资产负债表导出成功】')
+        else:
+            pass
+        self.assertEqual(r.status_code,200)
+
+    def test_company_finance_cash_flow_download(self):
+        '''阿里巴巴详情页—财务数据—现金流量表导出'''
+        finance_download_url = url + '/api/company/finance/cash_flow?cid=' + str(albb_id) + '&is_export=1&report_type=-1&select_date=1000&unit=100000000'
+        r = requests.get(finance_download_url, headers=headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—财务数据—现金流量表导出成功】')
+        else:
+            pass
+        self.assertEqual(r.status_code, 200)
+
+    def test_company_finance_main_business_download(self):
+        '''阿里巴巴详情页—财务数据—主营业务构成表导出'''
+        finance_download_url = url + '/api/company/finance/main_business?cid=' + str(albb_id) + '&is_export=1&report_type=-1&select_date=1000&unit=100000000'
+        r = requests.get(finance_download_url, headers=headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—财务数据—主营业务构成表导出成功】')
+        else:
+            pass
+        self.assertEqual(r.status_code, 200)
+
+
+
 
 
 if __name__ == '__main__':
