@@ -35,7 +35,7 @@ class ProjectDetailsTest(unittest.TestCase):
         self.assertEqual(x1,'1999-06-27 16:00:00')
         x2 = d['data']['list']['info']['market_value']['value_usd']
         print('【阿里巴巴的最新市值是（单位：美元）',x2,'】')
-        self.assertGreaterEqual(x2,350000000000)
+        self.assertGreaterEqual(x2,300000000000)
         x3 = d['data']['list']['info']['annual_turnover']['value']
         print('【阿里巴巴的年营业（单位：美元）',x3,'】')
         self.assertGreaterEqual(x3,30000000000)
@@ -202,6 +202,34 @@ class ProjectDetailsTest(unittest.TestCase):
         x1 = d['data']['list']['total_count']
         print('【阿里巴巴详情页—经营数据有',x1,'个统计图】')
         self.assertEqual(x1,27)
+
+    def test_company_operation_detail(self):
+        '''阿里巴巴详情页—经营数据—全屏'''
+        operation_detail_url = url + '/api/company/operation/detail?cid=' + str(albb_id) + '&id=' + str(operation_id)
+        r = requests.get(operation_detail_url,headers = headers)
+        d = r.json()
+        x = d['msg']
+        self.assertEqual(x,'成功')
+
+    def test_operation_download(self):
+        '''阿里巴巴详情页—经营数据—下载'''
+        operation_download_url = url + '/api/company/operation?cid=' + str(albb_id) + '&id=' + str(operation_id)
+        r = requests.get(operation_download_url,headers = headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—经营数据—下载成功】')
+        else:
+            print('【阿里巴巴详情页—经营数据—下载失败】')
+
+    def test_company_finance(self):
+        '''阿里巴巴详情页—财务数据'''
+        finance_url = url + '/api/company/finance?cid=' + str(albb_id)
+        r = requests.get(finance_url,headers = headers)
+        d = r.json()
+        x0 = len(d['data']['menu'])
+        print('【阿里巴巴详情页—财务数据menu有：',x0,'个】')
+        self.assertEqual(x0,5)
+
+
 
 if __name__ == '__main__':
     unittest.main()
