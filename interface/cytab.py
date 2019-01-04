@@ -279,8 +279,82 @@ class ProjectDetailsTest(unittest.TestCase):
             pass
         self.assertEqual(r.status_code, 200)
 
+    def test_company_industry(self):
+        '''阿里巴巴详情页—行业数据'''
+        company_industry_url = url + '/api/company/industry?cid=' + str(albb_id)
+        r = requests.get(company_industry_url,headers = headers)
+        d = r.json()
+        x0 = d['data']['list']['total_count']
+        print('【阿里巴巴详情页—行业数据有：',x0,'个】')
+        self.assertEqual(x0,12)
 
+    def test_company_industry_download(self):
+        '''阿里巴巴详情页—行业数据导出'''
+        company_industry_download_url = url + '/api/company/industry?cid=' + str(albb_id) + '&id=409'
+        r = requests.get(company_industry_download_url,headers = headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—行业数据导出成功】')
+        else:
+            pass
+        self.assertEqual(r.status_code, 200)
 
+    def test_company_industry_detail(self):
+        '''阿里巴巴详情页—行业数据全屏'''
+        company_industry_detail_url = url + '/api/company/industry/detail?cid=' + str(albb_id) + '&id=409'
+        r = requests.get(company_industry_detail_url,headers = headers)
+        if r.status_code == 200:
+            print('【阿里巴巴详情页—行业全屏展示成功】')
+        else:
+            pass
+        self.assertEqual(r.status_code, 200)
+
+    def test_company_contrasts(self):
+        '''阿里巴巴详情页—竞争对手'''
+        company_contrasts_url = url + '/api/v2/company/contrasts?cid=' + str(albb_id)
+        r = requests.get(company_contrasts_url,headers = headers)
+        d = r.json()
+        x0 = len(d['data']['menu'])
+        self.assertEqual(x0,4)
+        x1 = len(d['data']['list']['composite']['list'])
+        self.assertEqual(x1,10)
+        print('【阿里巴巴详情页—竞争对手—全部竞品有：',x1,'个】')
+        x2 = len(d['data']['list']['trade']['list'][0])  #阿里巴巴电商平台类竞品
+        self.assertEqual(x2,10)
+        x3 = len(d['data']['list']['reginal']['tabs'])   #阿里巴巴竞品分布地区
+        self.assertEqual(x3,4)
+
+    def test_company_news(self):
+        '''阿里巴巴详情页—相关新闻'''
+        company_news_url = url + '/api/news/list'
+        data = {"cid":albb_id}
+        r = requests.post(company_news_url,data,headers = headers)
+        d = r.json()
+        x0 = d['data']['total']
+        print('【阿里巴巴详情页—相关新闻数量为：',x0,'条】')
+        self.assertGreaterEqual(x0,1400)  #阿里巴巴详情页新闻数量为1415条  20190104
+        x1 = len(d['data']['list'])
+        self.assertEqual(x1,20)
+
+    def test_company_news_type(self):
+        '''阿里巴巴详情页—相关新闻报道类型'''
+        company_news_type_url = url + '/api/news/report-type'
+        r = requests.get(company_news_type_url,headers = headers)
+        d = r.json()
+        x0 = len(d['data']['list'])
+        print('【阿里巴巴详情页—相关新闻报道类型有：',x0,'种】')
+        self.assertEqual(x0,8)
+
+    def test_company_news_search(self):
+        '''阿里巴巴详情页—相关新闻搜索'''
+        company_news_url = url + '/api/news/list'
+        data = {"reportTime":"","reportType":[],"keyword":"预测未来","pageSize":20,"curPage":1,"cid":albb_id}
+        r = requests.post(company_news_url,data,headers = headers)
+        d = r.json()
+        x0 = d['data']['total']
+        print('【阿里巴巴详情页—相关新闻包含预测未来的新闻数量为：',x0,'条】')
+        self.assertGreaterEqual(x0,1)  #阿里巴巴详情页新闻数量为1415条  20190104
+        x1 = len(d['data']['list'])
+        self.assertEqual(x1,1)
 
 
 if __name__ == '__main__':
