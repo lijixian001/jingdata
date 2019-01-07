@@ -44,6 +44,7 @@ def topicDetailsid(database='jingdata_saas'):#专题数量  r = requests.post(he
     return data
 
 class NewsTest(unittest.TestCase):
+    '''新闻情报'''
 
     def test_newsletter(self):
         '''7✖24H快讯'''
