@@ -22,9 +22,5 @@ x0 = r.cookies
 x1 = r.cookies['acw_tc']
 #x2 = r.cookies['insight_uid']
 x3 = r.cookies['laravel_session']
-#headers = {"Cookie": x0}
-print(x0)
 headers = {"Cookie":'laravel_session=' + x3 + ';insight_uid=15621' + ';acw_tc=' + x1}
-print(headers)
 
-#print(headers)
