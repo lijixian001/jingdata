@@ -9,6 +9,7 @@ class ProjectDetailsTest(unittest.TestCase):
 
     # 阿里巴巴项目详情页
     def test_company_tab(self):
+        '''阿里巴巴详情页-Tab数量'''
         company_url = url + '/api/company/tab?cid=' + str(albb_id)
         r = requests.get(company_url,headers = headers)
         d = r.json()
