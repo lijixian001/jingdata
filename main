@@ -47,7 +47,7 @@ def allTest():
     suite6 = TestLoader().loadTestsFromTestCase(InsightTest) # 全部公司表头字段排序
     suite7 = TestLoader().loadTestsFromTestCase(LibraryTest) # 指标库
     suite8 = TestLoader().loadTestsFromTestCase(WorkbenchTest) #工作台
-    alltests = TestSuite([suite1,suite2,suite3,suite4,suite5,suite6,suite7])
+    alltests = TestSuite([suite1,suite2,suite3,suite4,suite5,suite6,suite7,suite8])
     #alltests = TestSuite([suite1])
     return alltests
 
