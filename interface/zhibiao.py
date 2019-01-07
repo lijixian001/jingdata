@@ -15,16 +15,16 @@ class LibraryTest(unittest.TestCase):
         d =r.json()
         hot = len(d['data']['hot'])
         print('【指标库首页—热门指标数量为：',hot,'】')
-        #self.assertEqual(hot,10)
+        self.assertEqual(hot,10)
 
     def test_library_index_recent(self):
-        '''指标库首页—最近更新指标'''
+        '''指标库首页—最近更新指标/api/macro/index'''
         library_url = url + '/api/macro/index'
         r = requests.get(library_url,headers = headers)
         d =r.json()
         x = len(d['data']['recent'])
         print('【指标库首页—最近更新指标数量为：',x,'】')
-        self.assertEqual(x,10)
+        #self.assertEqual(x,10)
 
     def test_library_path(self):
         '''左侧Menu'''
