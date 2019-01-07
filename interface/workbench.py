@@ -9,7 +9,6 @@ import sys
 
 class WorkbenchTest(unittest.TestCase):
     '''工作台'''
-
     def test_folderlist(self):
         '''工作台收藏夹列表
         /api/userscollection/folderlist'''
@@ -139,8 +138,27 @@ class WorkbenchTest(unittest.TestCase):
         print('【阿里健康添加的笔记 id =',noteid,'】')
         self.assertEqual(r.status_code,200)
 
+    def test_work_exportnum(self):
+        '''推荐公司列表导出统计'''
+        work_exportnum_url = url + '/api/userscollection/searchexportnum'
+        data = {"type":1,"sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]","floder_id":"46088"}
+        r = requests.post(work_exportnum_url,json = data,headers = headers)
+        print(r.status_code)
+        d = r.json()
+        x = d['data']['max_limit_num']
+        print('【剩余可导出条数为：',d['data']['export_num'],'】')
+        self.assertGreaterEqual(x,5000)
 
-
+    def test_work_down(self):
+        '''推荐公司导出'''
+        work_down_url = url + '/api/userscollection/searchexport'
+        data = {"curPage":1,"pageSize":30,"timezone":-8,"efields":"[{\"name\":\"公司简称\",\"field\":\"name\"},{\"name\":\"最新市值/估值\",\"field\":\"market_value\"},{\"name\":\"所属领域\",\"field\":\"industry\"},{\"name\":\"一句话简介\",\"field\":\"short_description\"},{\"name\":\"成立时间\",\"field\":\"establish_date\"},{\"name\":\"所在地\",\"field\":\"address\"},{\"name\":\"私募股权融资总额\",\"field\":\"pe_financing_amount\"},{\"name\":\"资本市场\",\"field\":\"stock_market_short_name\"},{\"name\":\"IPO募集金额\",\"field\":\"ipo_financing_amount\"},{\"name\":\"上市时间\",\"field\":\"listed_date\"},{\"name\":\"配股与定增总额\",\"field\":\"share_placement_amount\"},{\"name\":\"年营业额\",\"field\":\"annual_turnover\"},{\"name\":\"年利润额\",\"field\":\"annual_profit\"},{\"name\":\"最新股价\",\"field\":\"close_price\"},{\"name\":\"最新涨跌幅\",\"field\":\"change_price_pct\"},{\"name\":\"P/E(TTM)\",\"field\":\"pe_ttm\"},{\"name\":\"P/B(LF)\",\"field\":\"pb\"},{\"name\":\"P/S(TTM)\",\"field\":\"ps\"}]","export_num":15,"type":1,"sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]","floder_id":"46088"}
+        r = requests.post(work_down_url,data,headers = headers)
+        if r.status_code == 200:
+            print('【推荐公司导出成功】')
+        else:
+            print('【推荐公司导出成功】')
+        self.assertEqual(r.status_code,200)
 
 if __name__ ==  '__main__':
     unittest.main()
