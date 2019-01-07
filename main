@@ -1,12 +1,12 @@
 from config import HTMLTestRunner002
 import unittest
 from unittest import TestLoader,TestSuite,TestCase
-from interface.index import MyTestCaseIndex,MYTestCaseNewinformation
+from interface.homepage import MyTestCaseIndex,MYTestCaseNewinformation
 from interface.news import NewsTest
 from interface.idata import InsightDataTest
 from interface.cytab import ProjectDetailsTest
 from interface.insight import InsightTest
-from interface.zhibiao import LibraryTest
+from interface.index import LibraryTest
 from email.header import Header
 from  email.mime.text import MIMEText
 import smtplib
