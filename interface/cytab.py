@@ -163,9 +163,9 @@ class ProjectDetailsTest(unittest.TestCase):
         x0 = d['data']['total']
         print('【阿里巴巴详情页—工商法务—工商变更数量：',x0,'】')
         self.assertEqual(r.status_code,200)
-
+    '''
     def test_commpany_equitystructure(self):
-        '''阿里巴巴详情页—股权结构'''
+        #阿里巴巴详情页—股权结构
         equity_structure_url = url + '/api/company/equitystructure?cid=' + str(albb_id)
         r = requests.get(equity_structure_url,headers = headers)
         d = r.json()
@@ -176,7 +176,7 @@ class ProjectDetailsTest(unittest.TestCase):
         self.assertEqual(x1,'阿里巴巴')
 
     def test_commpany_investment_distribution(self):
-        '''阿里巴巴详情页—投资布局'''
+        #阿里巴巴详情页—投资布局
         investment_distribution_url = url + '/api/company/investmentdistribution?cid=' + str(albb_id)
         r = requests.get(investment_distribution_url,headers = headers)
         d = r.json()
@@ -191,6 +191,7 @@ class ProjectDetailsTest(unittest.TestCase):
         x3 = d['data']['list']['investmentabroad']['total']  #阿里巴巴对外投资
         print('【阿里巴巴详情页—投资布局—对外投资数量为：', x3, '家】')
         self.assertEqual(x3, 302)
+    '''
 
     def test_company_operation(self):
         '''阿里巴巴详情页—经营数据'''
