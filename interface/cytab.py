@@ -1,7 +1,7 @@
 import unittest
 import requests
 import json
-from config.url import url,headers
+from config.url import *
 from config.gl import *
 import pymysql
 
@@ -40,6 +40,56 @@ class ProjectDetailsTest(unittest.TestCase):
         x3 = d['data']['list']['info']['annual_turnover']['value']
         print('【阿里巴巴的年营业（单位：美元）',x3,'】')
         self.assertGreaterEqual(x3,30000000000)
+
+    def test_company_index_industry_trend(self):
+        '''阿里巴巴详情页公司信息—投资趋势'''
+        company_url = url + '/api/company/index?cid=' + str(albb_id)
+        r = requests.get(company_url,headers = headers)
+        d = r.json()
+        x5 = d['data']['list']['industry_trend'][0]['name']  # 电商行业-中国企业退出趋势
+        print('【投资趋势第一个统计图是：',x5,'】')
+        self.assertEqual(x5,'电商行业-中国企业退出趋势')
+        x6 = d['data']['list']['industry_trend'][1]['name']  # 电商行业-中国私募投资趋势
+        print('【投资趋势第二个统计图是：', x6, '】')
+        self.assertEqual(x6, '电商行业-中国私募投资趋势')
+
+    def test_company_detail_cn_industry_exit(self):
+        '''电商行业-中国企业退出趋势全屏'''
+        cn_industry_exit_url = url + '/api/macro/industry/detail/cn-industry-exit-trend-1'
+        r = requests.get(cn_industry_exit_url,headers = headers)
+        d = r.json()
+        x = d['data']['id']
+        print('【电商行业-中国企业退出趋势id是：', x, '】')
+        self.assertEqual(x, 'cn-industry-exit-trend-1')
+
+    def test_company_cn_industry_exit_down(self):
+        '''电商行业—中国企业退出趋势导出Excel'''
+        detail_down_url = url + '/api/macro/download?id=cn-industry-exit-trend-1&timezone=-8'
+        r = requests.get(detail_down_url,headers = headers)
+        if r.status_code==200:
+            print('【电商行业—中国企业退出趋势Excel导出成功】')
+        else:
+            print('【电商行业—中国企业退出趋势Excel导出失败】')
+        self.assertEqual(r.status_code,200)
+
+    def test_company_detail_cn_industry_pe(self):
+        '''电商行业-中国私募投资趋势全屏'''
+        cn_industry_pe_url = url + '/api/macro/industry/detail/cn-industry-pe-trend-1'
+        r = requests.get(cn_industry_pe_url, headers=headers)
+        d = r.json()
+        x = d['data']['id']
+        print('【电商行业-中国私募投资趋势id是：', x, '】')
+        self.assertEqual(x, 'cn-industry-pe-trend-1')
+
+    def test_company_cn_industry_pe_down(self):
+        '''电商行业-中国私募投资趋势导出Excel'''
+        detail_down_url = url + '/api/macro/download?id=cn-industry-pe-trend-1&timezone=-8'
+        r = requests.get(detail_down_url, headers=headers)
+        if r.status_code == 200:
+            print('【电商行业-中国私募投资趋势Excel导出成功】')
+        else:
+            print('【电商行业-中国私募投资趋势Excel导出失败】')
+        self.assertEqual(r.status_code, 200)
 
     def test_company_folder(self):
         '''公司详情页收藏夹'''
