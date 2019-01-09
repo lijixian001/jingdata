@@ -237,7 +237,7 @@ class ProjectDetailsTest(unittest.TestCase):
         self.assertGreaterEqual(x1,11)
         x2 = d['data']['list']['investmentmerge']['total']  #阿里巴巴控股子公司
         print('【阿里巴巴详情页—投资布局—控股子公司数量为：',x2,'家】')
-        self.assertEqual(x2,41)
+        self.assertGreaterEqual(x2,41)
         x3 = d['data']['list']['investmentabroad']['total']  #阿里巴巴对外投资
         print('【阿里巴巴详情页—投资布局—对外投资数量为：', x3, '家】')
         self.assertEqual(x3, 302)
