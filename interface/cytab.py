@@ -252,7 +252,7 @@ class ProjectDetailsTest(unittest.TestCase):
         print('【阿里巴巴详情页—经营数据左侧menu有：',x0,'个】')
         x1 = d['data']['list']['total_count']
         print('【阿里巴巴详情页—经营数据有',x1,'个统计图】')
-        self.assertEqual(x1,27)
+        self.assertGreaterEqual(x1,27)
 
     def test_company_operation_detail(self):
         '''阿里巴巴详情页—经营数据—全屏'''
