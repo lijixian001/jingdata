@@ -48,10 +48,10 @@ class ProjectDetailsTest(unittest.TestCase):
         d = r.json()
         x5 = d['data']['list']['industry_trend'][0]['name']  # 电商行业-中国企业退出趋势
         print('【投资趋势第一个统计图是：',x5,'】')
-        self.assertEqual(x5,'电商行业-中国企业退出趋势')
+        self.assertEqual(x5,'电商行业-中国私募投资趋势')
         x6 = d['data']['list']['industry_trend'][1]['name']  # 电商行业-中国私募投资趋势
         print('【投资趋势第二个统计图是：', x6, '】')
-        self.assertEqual(x6, '电商行业-中国私募投资趋势')
+        self.assertEqual(x6, '电商行业-中国企业退出趋势')
 
     def test_company_detail_cn_industry_exit(self):
         '''电商行业-中国企业退出趋势全屏'''
