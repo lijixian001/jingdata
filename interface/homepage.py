@@ -40,7 +40,6 @@ class MyTestCaseIndex(unittest.TestCase):
         r = requests.get(iurl)
         d = json.loads(r.text)
         code = r.status_code
-        print(len(d['data']))
         print("【研究报告数: %s"%len(d['data']['research']),'】')     #研究报告篇幅
         print("【洞见专题数：%s"%len(d['data']['promotion']),'】')    #洞见专题数量
         print("【热门项目数：%s"%len(d['data']['hot_company']),'】')  #热门项目数量
