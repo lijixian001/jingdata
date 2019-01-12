@@ -41,7 +41,7 @@ class LibraryTest(unittest.TestCase):
         r = requests.get(library_search_url,headers = headers)
         d = r.json()
         x = d['data']['total']
-        print('指标库搜索美拍匹配的结果有',x,'条】')
+        print('【指标库搜索美拍匹配的结果有',x,'条】')
         self.assertGreaterEqual(x,10000)
 
     def test_library_pathdir001(self):
