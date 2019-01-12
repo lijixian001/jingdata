@@ -15,7 +15,7 @@ class ProjectDetailsTest(unittest.TestCase):
         d = r.json()
         x = len(d['data'])
         print('【阿里巴巴详情页Tab数量为：',x,'】')
-        self.assertEqual(x,9)
+        self.assertEqual(x,10)
 
     def test_userinsightdata(self):
         '''阿里巴巴详情页—收藏夹'''
