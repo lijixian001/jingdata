@@ -7,6 +7,7 @@ import pymysql
 import urllib,urllib3
 
 class LibraryTest(unittest.TestCase):
+    '''指标库'''
 
     def test_library_index(self):
         '''指标库首页—热门指标'''
