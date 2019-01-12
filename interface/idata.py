@@ -430,7 +430,7 @@ class InsightDataTest(unittest.TestCase):
         c_industry_url = url + '/api/insight/dict_data?type=c_industry'
         r = requests.get(c_industry_url,headers = headers)
         d = r.json()
-        print('新三板公司所属领域字典有： %s'%len(d['data']),'个不同领域')
+        print('【新三板公司所属领域字典有： %s'%len(d['data']),'个不同领域】')
         self.assertEqual(len(d['data']),28)
 
     # 新三板公司所在地字典
