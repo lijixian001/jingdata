@@ -19,7 +19,6 @@ class WorkbenchTest(unittest.TestCase):
         print('【工作台—顶部Tab有：',x,'个】')
         self.assertEqual(d['data']['list'][0]['name'],'推荐公司')
         x1 = d['data']['list'][0]['id']
-        print(x1)
 
     def test_work_datalist(self):
         '''工作台—推荐公司列表'''
@@ -143,7 +142,6 @@ class WorkbenchTest(unittest.TestCase):
         work_exportnum_url = url + '/api/userscollection/searchexportnum'
         data = {"type":1,"sort":"[{\"field\":\"market_value\",\"sort\":\"desc\"}]","sub_search":"[]","search":"[]","floder_id":"46088"}
         r = requests.post(work_exportnum_url,json = data,headers = headers)
-        print(r.status_code)
         d = r.json()
         x = d['data']['max_limit_num']
         print('【剩余可导出条数为：',d['data']['export_num'],'】')
