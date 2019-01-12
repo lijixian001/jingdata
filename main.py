@@ -13,7 +13,7 @@ from  email.mime.text import MIMEText
 import smtplib
 import time
 # H:\seleuim\jingdata_saas_py是GitHub
-
+#
 def allTest():
     suite1 = TestLoader().loadTestsFromTestCase(MyTestCaseIndex)
     suite2 = TestLoader().loadTestsFromTestCase(MYTestCaseNewinformation)
