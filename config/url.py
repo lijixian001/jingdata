@@ -20,4 +20,4 @@ d = r.json()
 x3 = r.cookies['laravel_session']
 headers = {"Cookie":'laravel_session=' + x3 + ';insight_uid=15621'}
 
-#print(headers)
+#print(headers)1
