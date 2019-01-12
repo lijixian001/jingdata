@@ -6,6 +6,7 @@ from config.gl import *
 import pymysql
 
 class ProjectDetailsTest(unittest.TestCase):
+    '''阿里巴巴项目详情页'''
 
     # 阿里巴巴项目详情页
     def test_company_tab(self):

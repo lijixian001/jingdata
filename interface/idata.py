@@ -28,6 +28,7 @@ def loadDataBaseFromMyServer(database='jingdata_saas'):
     return data
 
 class InsightDataTest(unittest.TestCase):
+    '''公司交易（新)'''
 
     # 新经济公司列表
     def test_new_economy(self):

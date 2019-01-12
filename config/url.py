@@ -15,9 +15,8 @@ loginurl = url + '/api/user/login'
 data = {"mobile":"15200000001","password":"jingdata123456","is_remember":"1"}
 r =requests.post(loginurl,data)
 d = r.json()
-#x1 = r.cookies['acw_tc']
+x1 = r.cookies['acw_tc']
 #x2 = r.cookies['insight_uid']
 x3 = r.cookies['laravel_session']
-headers = {"Cookie":'laravel_session=' + x3 + ';insight_uid=15621'}
+headers = {"Cookie":'laravel_session=' + x3 + ';insight_uid=15621' + ';acw_tc=' + x1}
 
-#print(headers)1

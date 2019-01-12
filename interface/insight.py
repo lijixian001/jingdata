@@ -6,6 +6,7 @@ import pymysql
 from config.sql import *
 
 class InsightTest(unittest.TestCase):
+    '''公司交易（原）'''
     # 洞见数据menu
     def test_idata_menu(self):
         menu_url = url + '/api/insight/menu'

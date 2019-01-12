@@ -30,6 +30,7 @@ def loadDataBaseFromMyServer(database='jingdata_saas'):
 '''
 
 class MyTestCaseIndex(unittest.TestCase):
+    '''洞见首页'''
 
     def test_indexdata(self):#首页
         '''首页接口'''
