@@ -15,7 +15,7 @@ class ProjectDetailsTest(unittest.TestCase):
         d = r.json()
         x = len(d['data'])
         print('【阿里巴巴详情页Tab数量为：',x,'】')
-        self.assertEqual(x,10)
+        self.assertEqual(x,9)
 
     def test_userinsightdata(self):
         '''阿里巴巴详情页—收藏夹'''
@@ -240,7 +240,7 @@ class ProjectDetailsTest(unittest.TestCase):
         self.assertGreaterEqual(x2,41)
         x3 = d['data']['list']['investmentabroad']['total']  #阿里巴巴对外投资
         print('【阿里巴巴详情页—投资布局—对外投资数量为：', x3, '家】')
-        self.assertEqual(x3, 302)
+        self.assertGreaterEqual(x3, 302)
 
     def test_company_operation(self):
         '''阿里巴巴详情页—经营数据'''
