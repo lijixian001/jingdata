@@ -1,5 +1,5 @@
 import unittest
-import HTMLTestRunner
+#import HTMLTestRunner
 import requests
 import json
 import pymysql
@@ -23,10 +23,7 @@ class HeaderselectTest(unittest.TestCase):
 
         #gl.companyid = d['data']['data'][0]['id']
 
-    def test_companyindex(self): #项目详情页
 
-
-        print(cid)
 
 if '__name__' == '__main__':
     unittest.main

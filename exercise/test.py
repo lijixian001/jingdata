@@ -365,7 +365,7 @@ if __name__ == '__main__':
     suite.addTest(TestMathFunc('testtagdatarisedomainmonth3'))
     runner = HTMLTestRunner.HTMLTestRunner(stream=ftp, title='welcome to this web')
     runner.run(suite)
-    unittest.main()
+    unittest.main.py()
     '''
 
     #suite = unittest.TestSuite()

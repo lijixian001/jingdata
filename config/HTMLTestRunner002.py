@@ -2,12 +2,12 @@
 """
 A连接信息 TestRunner for use with the Python unit testing framework. It
 generates a HTML report to show the result at a glance.
-The simplest way to use this is to invoke its main method. E列表.g.
+The simplest way to use this is to invoke its main.py method. E列表.g.
     import unittest
     import HTMLTestRunner
     ... define your tests ...
     if __name__ == '__main__':
-        HTMLTestRunner.main()
+        HTMLTestRunner.main.py()
 For more customization options, instantiates a HTMLTestRunner object.
 HTMLTestRunner is a counterpart to unittest's TextTestRunner. E列表.g.
     # output to a file

@@ -2,177 +2,152 @@ import unittest
 import requests
 import json
 from config.url import url,headers
-from config.gl import *
 import pymysql
-import urllib,urllib3
+from config.sql import *
+'''
+config = {
+    'host': "192.168.6.38",
+    'user': "db-test",
+    'password': "123456",
+    'db': "jingdata_saas"
+}
+# 参数有个默认名字（请根据自己实际修改）
+def loadDataBaseFromMyServer(database='jingdata_saas'):
+    # 打开数据库连接
+    db = pymysql.connect(**config)
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
 
-class LibraryTest(unittest.TestCase):
+    try:
+        cursor.execute("select id from banner order by updated_at desc limit 0,1 " )
+        # 使用 fetchall() 方法获取所有数据，获取结果是一个二维tuple
+        data = cursor.fetchone()
+    except BaseException as e:
+        print(e)
+        db.rollback()
+    db.close()
+    return data
+'''
 
-    def test_library_index(self):
-        '''指标库首页—热门指标'''
-        library_url = url + '/api/macro/index'
-        r = requests.get(library_url,headers = headers)
-        d =r.json()
-        hot = len(d['data']['hot'])
-        print('【指标库首页—热门指标数量为：',hot,'】')
-        self.assertEqual(hot,10)
+class MyTestCaseIndex(unittest.TestCase):
 
-    def test_library_index_recent(self):
-        '''指标库首页—最近更新指标/api/macro/index'''
-        library_url = url + '/api/macro/index'
-        r = requests.get(library_url,headers = headers)
-        d =r.json()
-        x = len(d['data']['recent'])
-        print('【指标库首页—最近更新指标数量为：',x,'】')
-        #self.assertEqual(x,10)
+    def test_indexdata(self):#首页
+        '''首页接口'''
+        #a = bannerid()[0]
+        #print(a)
+        iurl = url + "/api/indexinfo/indexdata"
+        r = requests.get(iurl)
+        d = json.loads(r.text)
+        code = r.status_code
+        print(len(d['data']))
+        #print(d['data']['research'])
+        #print(d['data']['research'][0])
+        print("研究报告数: %s"%len(d['data']['research']))     #研究报告篇幅
+        print("洞见专题数：%s"%len(d['data']['promotion']))    #洞见专题数量
+        print("热门项目数：%s"%len(d['data']['hot_company']))  #热门项目数量
+        print("热门投资机构：%s"%len(d['data']['hot_organization']))#热门投资机构数
+        print("Banner数：%s"%len(d['data']['banner']))         #banner数量
+        self.assertEqual(len(d['data']['research']),7)
+        self.assertEqual(len(d['data']['promotion']),4)
+        self.assertEqual(len(d['data']['hot_company']),7)     #页面显示为6条数据
+        self.assertEqual(len(d['data']['hot_organization']),7)#页面显示为6条数据
+        #self.assertEqual(len(d['data']['banner']),2)
+        self.assertEqual(code, 200)
 
-    def test_library_path(self):
-        '''左侧Menu'''
-        library_path_url = url + '/api/macro/path'
-        r = requests.get(library_path_url,headers = headers)
+    def test_indexnewsletter(self):#快讯
+        newsurl = url + "/api/indexinfo/index-newsletter"
+        r = requests.get(newsurl)
         d = r.json()
-        menu = d['data'][0]['name']
-        print('【指标库左侧第一个Menu是：',menu,'】')
-        self.assertEqual(len(d['data']),4)
+        print("快讯数量： %s"%len(d['data']['list']))          #快讯数量
+        self.assertEqual(len(d['data']['list']),6)
 
-    def test_library_search(self):
-        '''指标库搜索关键词美拍'''
-        library_search_url = url + '/api/macro/list?source=indexlibrary&keyword=美拍&pageSize=20&curPage=1'
-        r = requests.get(library_search_url,headers = headers)
+    def test_investment(self):#最新融资事件
+        investmenturl = url + "/api/indexinfo/index-investment-list"
+        r = requests.get(investmenturl)
         d = r.json()
-        x = d['data']['total']
-        print('指标库搜索美拍匹配的结果有',x,'条】')
-        self.assertGreaterEqual(x,10000)
+        print("最新融资事件数量： %s"%len(d['data']))          #最新融资事件数量  线上为6条
+        self.assertEqual(len(d['data']),8)
 
-    def test_library_pathdir001(self):
-        '''新经济行业—新科技子目录'''
-        library_dir_url = url + '/api/macro/path?id=' + str(id001)
-        r = requests.get(library_dir_url,headers = headers)
+    def test_monthmarket(self):#本月行情
+        monthmarketurl = url + "/api/indexinfo/month-market"
+        r = requests.get(monthmarketurl)
         d = r.json()
-        x = len(d['data'])
-        print('【新经济行业—新科技下子级目录有：',x,'个】')
-        self.assertEqual(r.status_code,200)
+        print("本月行情种类：%s种"%len(d['data']))
+        self.assertEqual(len(d['data']),6)
 
-    def test_library_pathdir002(self):
-        '''新经济行业—新科技—大数据子级目录'''
-        library_dir_url = url + '/api/macro/path?id=' + str(id002)
-        r = requests.get(library_dir_url,headers = headers)
+    def test_tagdata(self):#热门领域-近一个月
+        tagdataurl = url + "/api/indexinfo/tagdata"
+        r = requests.get(tagdataurl)
         d = r.json()
-        x = len(d['data'])
-        print('【新经济行业—新科技—大数据下子级目录有：',x,'个】')
-        self.assertEqual(r.status_code,200)
+        print("近一月热门领域数量：%s"%len(d['data']['list']))
+        self.assertEqual(len(d['data']['list']),6)
 
-    def test_library_list(self):
-        '''新经济行业—新科技—大数据—国内大数据市场规模指标列表'''
-        library_list_url = url + '/api/macro/list?id=' + str(id003) + '&pageSize=20&curPage=1'
-        r = requests.get(library_list_url,headers = headers)
+    def test_tagdatahotdomainweek(self):#热门领域-近一周
+        domainweekurl = url + "/api/indexinfo/tagdata?type=1&date_type=1"
+        r = requests.get(domainweekurl)
         d = r.json()
-        x = d['data']['total']
-        print('【新经济行业—新科技—大数据—国内大数据市场规模指标有：',x,'条】')
-        self.assertEqual(r.status_code,200)
+        print("近一周热门领域数量：%s"%len(d['data']['list']))
+        self.assertEqual(len(d['data']['list']), 6)
 
-    def test_library_detail(self):
-        '''新经济行业—新科技—大数据—国内大数据市场规模指标详情'''
-        library_detail_url = url + '/api/macro/detail?id=' + str(id004)
-        r = requests.get(library_detail_url, headers = headers)
+    def test_tagdatahotdomainmonth3(self):#热门领域-近三个月
+        domainmonth3url = url + '/api/indexinfo/tagdata?type=1&date_type=3'
+        r = requests.get(domainmonth3url)
         d = r.json()
-        x = d['data']['name']
-        print('【该指标数据标题为：',x,'】')
-        self.assertEqual(r.status_code,200)
+        print("近三个月热门领域数量：%s"%len(d['data']['list']))
+        self.assertEqual(len(d['data']['list']),6)
 
-    def test_library_download(self):
-        '''新经济行业—新科技—大数据—国内大数据市场规模指标—市场规模：大数据：中国'''
-        library_download_url = url + '/api/macro/download?id=' + str(9607081) + '&timezone=-8'
-        r = requests.get(library_download_url,headers = headers)
-        if (r.status_code == 200):
-            print('【新经济行业—新科技—大数据—国内大数据—市场规模：大数据：中国—导出成功】')
-        else:
-            print('【新经济行业—新科技—大数据—国内大数据—市场规模：大数据：中国—导出失败】')
-        self.assertEqual(r.status_code,200)
-
-    def test_library_china_macro(self):
-        '''指标库—中国宏观子目录'''
-        library_macro_url = url + '/api/macro/path?id=' + str(id005)
-        r = requests.get(library_macro_url,headers = headers)
+    def test_tagdatarisedomainweek(self):#上升领域-近一周
+        risedomainweekurl = url + "/api/indexinfo/tagdata?type=2&date_type=1"
+        r = requests.get(risedomainweekurl)
         d = r.json()
-        x = len(d['data'])
-        print('【指标库—中国宏观—子目录有:',x,'个】')
-        self.assertGreaterEqual(x,17)
+        print("近一周上升领域数量：%s"%len(d['data']['list']))
+        self.assertEqual(len(d['data']['list']),6)
 
-    def test_library_macro(self):
-        '''指标库—中国宏观—人民生活—子目录'''
-        library_macro_url = url + '/api/macro/path?id=' + str(id006)
-        r = requests.get(library_macro_url,headers = headers)
+    def test_tagdatarisedomainmonth(self):#上升领域-近一个月
+        risedomainmonthurl = url + "/api/indexinfo/tagdata?type=2&date_type=2"
+        r = requests.get(risedomainmonthurl)
         d = r.json()
-        x = len(d['data'])
-        print('【指标库—中国宏观—人民生活—子目录有:', x, '个】')
-        self.assertGreaterEqual(x, 5)
+        print("近一个月上升领域数量：%s"%len(d['data']['list']))
+        self.assertEqual(len(d['data']['list']),6)
 
-    def test_library_macro001(self):
-        '''指标库—宏观经济—中国宏观—人民生活—人民生活质量'''
-        library_macro001_url = url + '/api/macro/path?id=' + str(id007)
-        r = requests.get(library_macro001_url,headers = headers)
+    def test_tagdatarisedomainmonth3(self):#上升领域-近三个月
+        risedomainmonth3url = url + "/api/indexinfo/tagdata?type=2&date_type=3"
+        r = requests.get(risedomainmonth3url)
         d = r.json()
-        x = len(d['data'])
-        print('【指标库—宏观经济—中国宏观—人民生活—人民生活质量:', x, '个】')
-        self.assertGreaterEqual(x, 2)
+        print("近三个月上升领域数量：%s"%len(d['data']['list']))
+        self.assertEqual(len(d['data']['list']),6)
 
-    def test_library_macro002(self):
-        '''指标库—宏观经济—中国宏观—人民生活—人民生活质量—电话普及率（月）'''
-        library_macro002_url = url + '/api/macro/list?id=' + str(id008) + '&pageSize=20&curPage=1'
-        r = requests.get(library_macro002_url,headers = headers)
+class MYTestCaseNewinformation(unittest.TestCase):
+
+    def test_indexnewsletter(self):#快讯
+        newsurl = url + "/api/indexinfo/index-newsletter"
+        r = requests.get(newsurl)
         d = r.json()
-        x = len(d['data']['list'])
-        print('【指标库—宏观经济—电话普及率（月）指标有:', x, '个】')
-        self.assertGreaterEqual(x, 2)
+        print("快讯数量： %s"%len(d['data']['list']))          #快讯数量
+        self.assertGreaterEqual(6,len(d['data']['list']))
 
-    def test_library_macro002_download(self):
-        '''指标库—宏观经济—中国宏观—人民生活—人民生活质量—电话普及率（月）—Excel下载'''
-        library_macro002_download_url = url + '/api/macro/download?id=' + str(id009) + '&timezone=-8'
-        r = requests.get(library_macro002_download_url,headers = headers)
-        if r.status_code == 200:
-            print('【指标库—宏观经济—电话普及率（月）指标下载成功】')
-        else:
-            print('【指标库—宏观经济—电话普及率（月）指标下载失败】')
-        self.assertGreaterEqual(r.status_code,200)
-
-    def test_library_detail(self):
-        '''中国宏观—详情页'''
-        library_detail_url = url + '/api/macro/detail?id=' + str(id009)
-        r = requests.get(library_detail_url,headers = headers)
+    def test_investment(self):#最新融资事件
+        investmenturl = url + "/api/indexinfo/index-investment-list"
+        r = requests.get(investmenturl)
         d = r.json()
-        x = len(d['data']['line_chart_value_datas'])
-        print('【中国宏观—电话普及率（月）指标详情页打开成功】')
-        self.assertEqual(x,173)
-
-    def test_library_official_account(self):
-        '''指标库—特色数据—公众号数据台账'''
-        library_official_account_url = url + '/api/macro/path?id=' + str(id010)
-        r = requests.get(library_official_account_url,headers = headers)
-        d = r.json()
-        x = len(d['data'])
-        print('【指标库—特色数据—公众号数据有:', x, '条】')
-        self.assertGreaterEqual(x, 24)
-
-    def test_library_wealth(self):
-        '''指标库—特色数据—公众号数据—财富台账'''
-        library_wealth_url = url + '/api/macro/ledgerList?id=' +  str(id011) + '&ledger=official_account&sort={"field":"read_count","order":"desc"}&pageSize=20&curPage=1'
-        r = requests.get(library_wealth_url,headers = headers)
-        d = r.json()
-        x = d['data']['total']
-        print('【指标库—特色数据—公众号数据—财富台账有:', x, '个公众号】')
-        self.assertGreaterEqual(x, 1200)
-
-    def test_library_wealth_path(self):
-        '''指标库—特色数据—公众号数据—财富台账—平安普惠指标'''
-        library_wealth_path_url = url + '/api/macro/list?id=' + str(id012) + '&pageSize=20&curPage=1'
-        r = requests.get(library_wealth_path_url,headers = headers)
-        d = r.json()
-        x = d['data']['total']
-        print('【指标库—特色数据—公众号数据—财富-平安普惠有:', x, '指标】')
-        self.assertGreaterEqual(x, 4)
-
-
+        print("最新融资事件数量： %s"%len(d['data']))          #最新融资事件数量  线上为6条
+        self.assertEqual(len(d['data']),8)
 
 if __name__ == '__main__':
     unittest.main()
+
+
+'''
+if __name__ == '__main__':
+    #unittest.main()
+    suite = unittest.TestSuite()
+    suite.addTest(MyTestCaseIndex("testindexdata"))
+    #suite.addTest(unittest.TestSuite(MYTestCaseNewinformation))
+    file_path = "H:\\a.html"
+    file_result = open(file_path, 'wb')
+    runner = HTMLTestRunner.HTMLTestRunner(
+        stream = file_result, title = u'参数化测试数据', description = u'描述'
+    )
+    runner.run(suite)
+    file_result.close()
+'''
