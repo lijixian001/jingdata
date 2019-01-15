@@ -33,7 +33,7 @@ class ProjectDetailsTest(unittest.TestCase):
         x = d['data']['list']['info']['cid']
         self.assertEqual(x,str(albb_id))
         x1 = d['data']['list']['info']['establish_date']
-        self.assertEqual(x1,['1999-06-27 16:00:00'])
+        self.assertEqual(x1,'1999-06-27 16:00:00')
         x2 = d['data']['list']['info']['market_value']['value_usd']
         print('【阿里巴巴的最新市值是（单位：美元）',x2,'】')
         self.assertGreaterEqual(x2,300000000000)
