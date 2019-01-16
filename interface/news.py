@@ -63,7 +63,7 @@ class NewsTest(unittest.TestCase):
         d = r.json()
         c = d['data']['list'][0]['id']#获取第一个专题id
         print("【洞见专题数量：%s"%len(d['data']['list']),'】')
-        self.assertEqual(len(d['data']['list']),8)
+        self.assertGreaterEqual(len(d['data']['list']),6)
 
     def test_topicDetail(self):
         '''专题详情页'''
