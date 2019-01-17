@@ -330,9 +330,9 @@ class ProjectDetailsTest(unittest.TestCase):
             pass
         self.assertEqual(r.status_code, 200)
 
-        '''
+
     def test_company_industry(self):
-        阿里巴巴详情页—行业数据
+        '''阿里巴巴详情页—行业数据'''
         company_industry_url = url + '/api/company/industry?cid=' + str(albb_id)
         r = requests.get(company_industry_url,headers = headers)
         d = r.json()
@@ -341,7 +341,7 @@ class ProjectDetailsTest(unittest.TestCase):
         self.assertEqual(x0,12)
 
     def test_company_industry_download(self):
-        阿里巴巴详情页—行业数据导出
+        '''阿里巴巴详情页—行业数据导出'''
         company_industry_download_url = url + '/api/company/industry?cid=' + str(albb_id) + '&id=409'
         r = requests.get(company_industry_download_url,headers = headers)
         if r.status_code == 200:
@@ -351,7 +351,7 @@ class ProjectDetailsTest(unittest.TestCase):
         self.assertEqual(r.status_code, 200)
 
     def test_company_industry_detail(self):
-        阿里巴巴详情页—行业数据全屏
+        '''阿里巴巴详情页—行业数据全屏'''
         company_industry_detail_url = url + '/api/company/industry/detail?cid=' + str(albb_id) + '&id=409'
         r = requests.get(company_industry_detail_url,headers = headers)
         if r.status_code == 200:
@@ -359,7 +359,7 @@ class ProjectDetailsTest(unittest.TestCase):
         else:
             pass
         self.assertEqual(r.status_code, 200)
-'''
+
     def test_company_contrasts(self):
         '''阿里巴巴详情页—竞争对手'''
         company_contrasts_url = url + '/api/v2/company/contrasts?cid=' + str(albb_id)
