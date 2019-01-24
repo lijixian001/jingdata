@@ -171,7 +171,7 @@ class LibraryTest(unittest.TestCase):
         d = r.json()
         x = d['data']['total']
         print('【指标库—特色数据—公众号数据—财富-平安普惠有:', x, '指标】')
-        self.assertGreaterEqual(x, 4)
+        self.assertGreaterEqual(x, 3)
 
 
 
