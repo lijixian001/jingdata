@@ -338,7 +338,7 @@ class ProjectDetailsTest(unittest.TestCase):
         d = r.json()
         x0 = d['data']['list']['total_count']
         print('【阿里巴巴详情页—行业数据有：',x0,'个】')
-        self.assertEqual(x0,12)
+        self.assertGreaterEqual(x0,12)
 
     def test_company_industry_download(self):
         '''阿里巴巴详情页—行业数据导出'''
