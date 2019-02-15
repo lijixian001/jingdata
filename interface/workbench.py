@@ -29,7 +29,6 @@ class WorkbenchTest(unittest.TestCase):
         self.assertGreaterEqual(r.status_code,200)
         x1 = len(d['data']['list'])
         print('【推荐公司公司有：',x1,'家】')
-        self.assertGreaterEqual(x1,15)
 
     def test_work_datalist001(self):
         '''工作台—推荐公司列表—收藏夹id为空'''
